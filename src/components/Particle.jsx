@@ -6,6 +6,7 @@ import * as THREE from 'three';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import ExplodingCubes from './ExplodingCubes';
+import CityBuilder from './CityBuilder';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,6 +18,8 @@ export default function ParticleCanvas() {
   const cubeRef = useRef();
   const [showExplosion, setShowExplosion] = useState(false); // To trigger the explosion
   const [explosionProgress, setExplosionProgress] = useState(0); // To track the explosion
+  const [showCity, setShowCity] = useState(false);
+
 
   const geometry = useMemo(() => {
     const positions = new Float32Array(PARTICLE_COUNT * 3);
@@ -146,7 +149,8 @@ export default function ParticleCanvas() {
         />
       </mesh>
 
-      {showExplosion && <ExplodingCubes explosionProgress={explosionProgress} />}
+      {showExplosion && <ExplodingCubes explosionProgress={explosionProgress} onExplosionEnd={() => setShowCity(true)}/>}
+      {showCity && <CityBuilder />}
     </>
   );
 }
